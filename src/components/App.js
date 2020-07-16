@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {getAll, getByType} from '../data/pets'
 import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
@@ -13,6 +13,22 @@ class App extends React.Component {
         type: 'all'
       }
     }
+    
+  }
+
+  onFindPetsClick=(type)=>{
+    this.setState({
+      filters: {...this.state.filters, type: type}
+    })
+  }
+  renderPets=()=>{
+    switch(this.state.filters.type){
+      case 'all': return getAll()
+      case 'cat':  return getByType('cat')
+      case 'dog': return getByType('dog')
+      case 'micropig': return getByType('micropig')
+      default: return getAll()
+    }
   }
 
   render() {
@@ -24,10 +40,10 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters />
+              <Filters  onFindPetsClick={this.onFindPetsClick}/>
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser allPets={this.renderPets()}/>
             </div>
           </div>
         </div>
