@@ -1,8 +1,10 @@
 import React from 'react'
-
+import Pet from './Pet'
 class Filters extends React.Component {
   render() {
+    console.log(this.props.pets)
     return (
+
       <div className="ui form">
         <h3>Animal type</h3>
         <div className="field">
@@ -15,9 +17,10 @@ class Filters extends React.Component {
         </div>
 
         <div className="field">
-          <button className="ui secondary button">Find pets</button>
+          <button className="ui secondary button" onClick={this.props.pets}>Find pets</button>
         </div>
       </div>
+      
     )
   }
 }

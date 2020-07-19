@@ -4,18 +4,26 @@ import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
 class App extends React.Component {
-  constructor() {
-    super()
-
-    this.state = {
+ state = {
       pets: [],
       filters: {
         type: 'all'
       }
     }
+    
+  
+  componentDidMount(){
+let petsAPI = '/api/pets'
+this.state.filters.type !=="all"? petsAPI+=`?type=${this.state.filters.type}`:
+
+    fetch(petsAPI)
+    .then(resp => resp.json())
+    .then(pets =>this.setState({pets:pets}))
+
   }
 
   render() {
+  
     return (
       <div className="ui container">
         <header>
@@ -24,10 +32,10 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters />
+              <Filters  />
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser pets={this.state.pets}/>
             </div>
           </div>
         </div>
